@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Service
+  postgres:
+    image: postgres:latest
+    container_name: cb_container
+    restart: always
+    environment:
+      POSTGRES_USER: chatbot
+      POSTGRES_PASSWORD: chatbot!
+      POSTGRES_DB: chatbot_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - backend
+
+  # Weaviate Vector database
+  weaviate:
+    image: semitechnologies/weaviate:latest
+    container_name: weaviate
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      QUERY_DEFAULTS_LIMIT: 100
+      AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: 'true'
+      PERSISTENCE_DATA_PATH: '/var/lib/weaviate'
+    volumes:
+      - weaviate_data:/var/lib/weaviate
+    networks:
+      - backend
+
+  # Ollama - local Llama 2/3, Mistral, Gemma
+  ollama:
+    image: ollama/ollama
+    container_name: ollama_ai
+    restart: always
+    ports:
+      - "11434:11434"
+    networks:
+      - backend
+    volumes:
+      - ollama_data:/root/.ollama
+
+volumes:
+  postgres_data:
+  weaviate_data:
+  ollama_data:
+
+networks:
+  backend:
+    driver: bridge
