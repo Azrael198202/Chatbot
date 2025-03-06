@@ -8,11 +8,13 @@
 
 # 2.  Install Required Python Packages
     > chatbot-ai
-    pip install langchain weaviate-client psycopg2 sentence-transformers openai ollama
+    pip install langchain langchain-community langchain-huggingface langchain-ollama langchain-core weaviate-client psycopg2 sentence-transformers openai ollama
 
 
 # If you have to use v3 code, install the v3 client and pin the v3 dependency in your requirements file: weaviate-client>=3.26.7;<4.0.0
-    pip install "weaviate-client>=3.26.7,<4.0.0"
+    pip install "weaviate-client>=3.26.7,<4.0.0"     => client = weaviate.Client("http://localhost:8080")
+    pip install --upgrade weaviate-client
+    pin install weaviate-client    => client = weaviate.connect_to_local()
 
 
 
