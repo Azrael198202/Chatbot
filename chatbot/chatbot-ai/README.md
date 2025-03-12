@@ -9,6 +9,8 @@
 # 2.  Install Required Python Packages
     > chatbot-ai
     pip install langchain langchain-community langchain-huggingface langchain-ollama langchain-core weaviate-client psycopg2 sentence-transformers openai ollama
+    pip install sqlalchemy elasticsearch
+    pip install fastapi uvicorn 
 
 
 # If you have to use v3 code, install the v3 client and pin the v3 dependency in your requirements file: weaviate-client>=3.26.7;<4.0.0
