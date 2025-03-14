@@ -9,7 +9,8 @@ Description: Initializes the PostgreSQL database connection, defines database mo
 Version: : 1.0.0
 """
 
-from sqlalchemy import create_engine, Column, Integer, String, Text
+from sqlalchemy import create_engine, Column, Integer, String, Text,ForeignKey
+from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
@@ -32,8 +33,26 @@ class Document(Base):
     """
     __tablename__ = "documents"
 
-    id = Column(Integer, primary_key=True, index=True)
-    content = Column(Text, nullable=False)
+    id = Column(Integer, primary_key=True)
+    weaviate_id = Column(Text, unique=True, nullable=False, index=True) 
+    title = Column(Text, nullable=True)  
+    content = Column(Text, nullable=True)
+    question = Column(Text, nullable=True)
+    answer = Column(Text, nullable=True)
+    
+    
+# class Question(Base):
+#     """
+#     Question table model for storing questions and answers linked to documents
+#     """
+#     __tablename__ = "questions"
+
+#     id = Column(Integer, primary_key=True)
+#     document_id = Column(Integer, ForeignKey("documents.id"), nullable=False)
+#     question = Column(Text, nullable=False)
+#     answer = Column(Text, nullable=False)
+
+#     document = relationship("Document", back_populates="questions")
 
 # create table
 Base.metadata.create_all(bind=engine)

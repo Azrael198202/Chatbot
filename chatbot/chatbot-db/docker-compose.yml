@@ -19,8 +19,8 @@ services:
 
   # Weaviate Vector database
   weaviate:
-    #image: semitechnologies/weaviate:latest
-    image: cr.weaviate.io/semitechnologies/weaviate:1.25.1
+    image: semitechnologies/weaviate:latest
+    #image: cr.weaviate.io/semitechnologies/weaviate:1.25.1
     container_name: weaviate
     command:
     - --host
@@ -30,9 +30,9 @@ services:
     - --scheme
     - http
     restart: always
-    depends_on:
-      weaviate-vectorizer:
-        condition: service_started
+    #depends_on:
+    #  weaviate-vectorizer:
+    #    condition: service_started
     ports:
       - "8080:8080"
       - "50051:50051"
@@ -40,9 +40,8 @@ services:
       RAFT_ENABLE_ONE_NODE_RECOVERY: 'true'
       QUERY_DEFAULTS_LIMIT: 100
       ENABLE_API_BASED_MODULES: 'true'
-      #DEFAULT_VECTORIZER_MODULE: text2vec-transformers
-      #ENABLE_MODULES: text2vec-transformers
-      #TRANSFORMERS_INFERENCE_API: http://weaviate-vectorizer:8080
+      #ENABLE_MODULES: text2vec-transformers # Enable this module
+      #TRANSFORMERS_INFERENCE_API: http://t2v-transformers:8080  # Set the inference API endpoint
       AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: 'true'
       PERSISTENCE_DATA_PATH: '/var/lib/weaviate'
       #CLUSTER_HOSTNAME: 'node1'
@@ -50,10 +49,12 @@ services:
       - weaviate_data:/var/lib/weaviate
     networks:
       - backend
-  #weaviate-vectorizer:
-  #  image: cr.weaviate.io/semitechnologies/transformers-inference:sentence-transformers-multi-qa-MiniLM-L6-cos-v1
-  #  environment:
-  #    ENABLE_CUDA: 0  # set to 1 to enable if you have a GPU available for optimum performance
+  #t2v-transformers:  # Set the name of the inference container
+  #    image: cr.weaviate.io/semitechnologies/transformers-inference:baai-bge-base-en-v1.5
+      #image: cr.weaviate.io/semitechnologies/transformers-inference:sentence-transformers-multi-qa-MiniLM-L6-cos-v1
+      #image: cr.weaviate.io/semitechnologies/transformers-inference:sentence-transformers-paraphrase-multilingual-MiniLM-L12-v2
+  #    environment:
+  #      ENABLE_CUDA: 0  # Set to 1 to enable
 
   # Ollama - local Llama 2/3, Mistral, Gemma
   ollama:

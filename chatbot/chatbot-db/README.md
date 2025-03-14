@@ -13,3 +13,5 @@
 
 # 2.  Install Required Python Packages
     pip install langchain weaviate-client psycopg2 sentence-transformers openai ollama
+
+# 3. docker run -d --memory=512m --cpus=1 nginx  / docker run -d --cpuset-cpus="0,1" nginx

@@ -13,7 +13,8 @@ from langchain import LLMChain, PromptTemplate
 from langchain.llms import Ollama
 
 # initializes Ollama
-llm = Ollama(model="gpt-3")
+#llm = Ollama(model="gpt-3")
+llm = Ollama(model="hotel")
 
 # initializes template
 template = """
@@ -53,5 +54,5 @@ def retrain_model():
     training_data = [doc.content for doc in documents]
     
     # Assuming the use of Ollama's fine-tuning API (adjust according to the actual API)."
-    llm.fine_tune(training_data, model="gpt-3")
+    llm.fine_tune(training_data, model="hotel")
     print("Model retrained with latest data.")

@@ -22,4 +22,4 @@ def schedule_tasks():
         # Perform model optimization once a day at 2 AM.
         if time.localtime().tm_hour == 2:
             retrain_model()
-        time.sleep(3600)  # Check every hour
+        time.sleep(3600)  # Check every hourd
